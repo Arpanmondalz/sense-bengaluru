@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sense Bengaluru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Preload fonts to prevent flash of unstyled text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Amatic+SC:wght@400;700&family=Hubballi&family=Roboto+Slab:wght@300;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <!-- p5.js library for the canvas simulations (AQI, Metro, etc.) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+
+    <!-- 
+      Header Section 
+      Contains the main project title and the localized Kannada translation.
+    -->
+    <header class="main-header">
+        <h1>Sense Bengaluru</h1>
+        <p class="kannada-title">ಸೆನ್ಸ್ ಬೆಂಗಳೂರು</p>
+    </header>
+
+    <div class="grid-container">
+
+        <!-- 
+           Module 1: Weather 
+           Visualizes current weather using a mascot GIF that changes based on API data (e.g., sunny, rainy).
+        -->
+        <div class="card" id="card-weather">
+            <div class="card-content">
+                <h3>Weather</h3>
+                <img src="assets/thumb_weather.png" class="card-thumbnail" alt="Weather">
+                <div class="visual-container" id="visual-weather">
+                    <!-- The src for this img is updated via JS based on weather conditions -->
+                    <img id="weather-mascot" src="assets/weather_sunny.gif" alt="Mascot">
+                    <div class="card-footer">
+                        <h2>BENGALURU WEATHER</h2>
+                        <p>Current Bengaluru weather conditions.<br>Cartoon character changes outfit based on weather feel.</p>
+                    </div>
+                    <div class="data-overlay bottom-left"><span id="temp-val">--</span>°C</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+           Module 2: Air Quality (AQI)
+           Uses a Petri dish metaphor. The canvas overlay runs a "Game of Life" simulation 
+           where cell survival rates are inversely proportional to air quality.
+        -->
+        <div class="card" id="card-aqi">
+            <div class="card-content">
+                <h3>Air Quality</h3>
+                <img src="assets/thumb_aqi.png" class="card-thumbnail" alt="AQI">
+                <div class="visual-container" id="canvas-aqi">
+                    <img src="assets/petri_dish.png" class="petri-frame" alt="Dish">
+                    <div class="card-footer">
+                        <h2>AIR QUALITY INDEX</h2>
+                        <p>Cellular simulation of live air pollution based on Conway's Game of Life.<br>Colony thrives when air is clean and struggles to survive with bad air.</p>
+                    </div>
+                    <div class="data-overlay bottom-left">AQI: <span id="aqi-val">--</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+           Module 3: Traffic
+           Visualizes congestion using a speedometer.
+           Low speed = High traffic (red/slow). High speed = Low traffic (green/fast).
+        -->
+        <div class="card" id="card-traffic">
+            <div class="card-content">
+                <h3>Traffic</h3>
+                <img src="assets/speedometer_base.png" class="card-thumbnail" alt="Traffic">
+                <div class="visual-container" id="visual-traffic">
+                    <div class="speedometer-wrapper">
+                        <img src="assets/speedometer_base.png" class="speedometer-base" alt="Speedometer">
+                        <!-- Needle rotation is controlled by JS based on traffic velocity -->
+                        <img src="assets/speed_needle.svg" class="speed-needle" id="traffic-needle" alt="Needle">
+                    </div>
+                    <div class="card-footer">
+                        <h2>TRAFFIC VELOCITY</h2>
+                        <p>Live road traffic congestion between Silk Board to Hebbal.<br>Speedometer indicates average speed on road.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+           Module 4: Metro Density
+           Gas simulation metaphor. 
+           Orange particles represent CO2 (crowd), Blue represents Oxygen (empty space).
+        -->
+        <div class="card" id="card-metro">
+            <div class="card-content">
+                <h3>Metro Density</h3>
+                <img src="assets/thumb_metro.png" class="card-thumbnail" alt="Metro">
+                <div class="visual-container" id="visual-metro">
+                    <div id="canvas-metro"></div>
+                    <div class="card-footer">
+                        <h2>METRO CROWD DENSITY</h2>
+                        <p>Live Namma Metro crowd density with gas simulation.<br>Orange > CO2, Blue > Oxygen. More crowd increases CO2.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+           Module 5: News Sentiment
+           Geiger counter metaphor.
+           High negative sentiment (chaos) = faster needle movement and click sounds.
+        -->
+        <div class="card" id="card-news">
+            <div class="card-content">
+                <h3>Vibe Check</h3>
+                <img src="assets/geiger_full.png" class="card-thumbnail" alt="News">
+                <div class="visual-container" id="visual-news">
+                    <div class="geiger-box">
+                        <img src="assets/geiger_full.png" class="geiger-face" alt="Geiger">
+                        <div class="geiger-needle" id="news-needle"></div>
+                    </div>
+                    <div class="card-footer">
+                        <h2>NEWS SENTIMENT</h2>
+                        <p>Current internet vibe based on news sentiment analysis.<br>Higher chaos = Faster clicking of geiger counter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+           Module 6: Flight Radar
+           Visualizes aircraft density over the city using a radar sweep animation.
+        -->
+        <div class="card" id="card-radar">
+            <div class="card-content">
+                <h3>Sky Watch</h3>
+                <img src="assets/radar_base.png" class="card-thumbnail" alt="Radar">
+                <div class="visual-container" id="visual-radar">
+                    <div class="radar-equipment">
+                        <img src="assets/radar_base.png" class="radar-base-large" alt="Radar">
+                        <img src="assets/radar_sweep_square.svg" class="radar-sweep-large" alt="Sweep">
+                        <!-- Dots representing planes are injected here by JS -->
+                        <div id="radar-dots-layer"></div>
+                    </div>
+                    <div class="card-footer">
+                        <h2>AIR TRAFFIC Density</h2>
+                        <p>Live flight density over Bengaluru.<br>Radar shows number of aircrafts.</p>
+                    </div>
+                    <div class="data-overlay bottom-left">FLIGHTS: <span id="flight-val">0</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- UI Controls -->
+    <button id="close-btn">×</button>
+    <audio id="geiger-audio" src="assets/geiger_clicks.mp3" preload="auto"></audio>
+
+    <!-- Main application logic -->
+    <script src="script.js"></script>
+
+    <!-- Footer: Credits and Socials -->
+    <div class="about-section">
+        <p class="handwritten-text">
+            Created with <span style="color: #FF6B6B;">&hearts;</span> by Arpan Mondal
+        </p>
+        <div class="social-links-cartoon">
+            <a href="https://www.youtube.com/@makestreme" target="_blank">YouTube</a>
+            <a href="https://linkedin.com/in/arpanmondal23" target="_blank">LinkedIn</a>
+            <a href="mailto:arpan0823@outlook.com">Email</a>
+        </div>
+    </div>
+
+    <footer class="last-updated-bar">
+        <span id="last-updated">Last updated: --</span>
+    </footer>
+
+</body>
+</html>

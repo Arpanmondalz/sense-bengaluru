@@ -1,0 +1,594 @@
+:root {
+    /* 
+      COLOR PALETTE: Neo-Brutalist "Classy" Vibe 
+      Combines sharp high-contrast elements (black borders) with a softer, 
+      warmer background to avoid eye strain.
+    */
+    --bg-paper: #FCF9EA;    /* Warmer, cleaner off-white background */
+    --text-main: #111;      /* Sharp black for primary text */
+    --border-black: #111;   /* High contrast border color for the brutalist look */
+    --accent-coral: #FF6B6B; /* Coral accent color (used for buttons/highlights) */
+    --neon-orange: #FF6B6B; /* Fallback neon color, mapped to coral for consistency */
+}
+
+/* Reset basic spacing */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-color: var(--bg-paper);
+    font-family: "Roboto Slab", serif;
+    color: var(--text-main);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* --- MAIN HEADER SECTION --- */
+.main-header {
+    text-align: center;
+    padding: 60px 20px 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.main-header h1 {
+    font-family: "Amatic SC", cursive;
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: 1px; /* Slightly tighter for the bold look */
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.kannada-title {
+    font-family: "Hubballi", sans-serif;
+    font-size: 4rem;
+    color: var(--accent-coral); /* Coral color adds visual interest to the localized title */
+    font-weight: 600;
+}
+
+/* Responsive Text Adjustment */
+@media (max-width: 768px) {
+    .main-header h1 { font-size: 2.8rem; }
+    .kannada-title { font-size: 2rem; font-weight: 700; }
+}
+
+
+/* --- GRID LAYOUT SYSTEM --- */
+.grid-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 30px 30px 50px;
+    display: grid;
+    gap: 40px;
+    /* Auto-fit columns: minimum 450px wide, otherwise fill available space */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        padding: 20px 20px 40px;
+        gap: 30px;
+    }
+}
+
+
+/* --- CARD COMPONENT DESIGN (Neo-Brutalist) --- */
+.card {
+    background: #fffbfc;
+    /* The defining style: Thick borders, hard non-blurred shadows, sharp corners */
+    border: 3px solid var(--border-black);
+    border-radius: 10px; 
+    box-shadow: 8px 8px 0px var(--border-black); /* HARD SHADOW */
+    height: 450px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Fast transition for "tactile" feel */
+}
+
+/* Hover State: "Press" effect */
+.card:hover {
+    transform: translate(4px, 4px); /* Moves card down-right */
+    box-shadow: 4px 4px 0px var(--border-black); /* Reduces shadow offset */
+    border-color: var(--border-black);
+}
+
+.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.card-content h3 {
+    font-family: "Amatic SC", cursive;
+    padding: 24px 28px;
+    font-size: 2rem; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    z-index: 20;
+}
+
+.card-thumbnail {
+    width: 100%;
+    height: 320px;
+    object-fit: contain;
+    padding: 10px;
+    opacity: 1;
+}
+
+/* "Click to Open" Pill Badge */
+.card-content::after {
+    content: "Click to Open";
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem; 
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    
+    /* Pill styling */
+    background: var(--accent-coral);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 2px solid var(--border-black);
+    box-shadow: 3px 3px 0px var(--border-black);
+}
+
+.card:hover .card-content::after { opacity: 1; }
+.card.expanded .card-content::after { display: none; }
+
+
+/* Mobile Card Adjustments */
+@media (max-width: 768px) {
+    .card { height: 250px; }
+    .card-content h3 { padding: 10px 12px; font-size: 1.5rem; }
+    .card-thumbnail { width: 100%; height: 180px; padding: 6px; }
+    
+    .card-content::after {
+        font-size: 0.7rem;
+        bottom: 10px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        border: 2px solid var(--border-black);
+        box-shadow: 3px 3px 0px var(--border-black);
+    }
+}
+
+
+/* --- EXPANDED MODAL STATE --- */
+.card.expanded {
+    position: fixed;
+    inset: 0; /* Full screen */
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    animation: cardFlip 0.6s ease-out; /* Flip entrance animation */
+}
+
+@keyframes cardFlip {
+    0% { opacity: 0; transform: perspective(1000px) rotateY(-20deg); }
+    100% { opacity: 1; transform: perspective(1000px) rotateY(0deg); }
+}
+
+.card.expanded h3 { display: none; } /* Hide title in expanded mode */
+.card.expanded .card-thumbnail { display: none; } /* Hide thumbnail */
+
+/* Visual container for simulations (Only visible in expanded state) */
+.visual-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.expanded .visual-container {
+    display: flex;
+    animation: fadeIn 0.5s ease-out 0.2s backwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* --- MODAL FOOTER (Description Box) --- */
+.card-footer {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 200;
+    width: auto;
+    max-width: 500px;
+    
+    /* Brutalist Box Style */
+    background: white;
+    padding: 14px 24px;
+    border-radius: 8px;
+    border: 2px solid var(--border-black);
+    box-shadow: 6px 6px 0px var(--border-black); /* Hard shadow */
+    pointer-events: none; /* Click-through */
+    animation: slideUp 0.8s ease-out 0.4s backwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translate(-50%, 30px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.card-footer h2 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.card-footer p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+
+/* --- CLOSE BUTTON --- */
+#close-btn {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 3px solid var(--border-black);
+    border-radius: 50%;
+    color: var(--border-black);
+    box-shadow: 4px 4px 0px var(--border-black);
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 3000;
+    display: none; /* Hidden until card expanded */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+#close-btn:hover {
+    transform: translate(2px, 2px); /* Press effect */
+    box-shadow: 2px 2px 0px var(--border-black);
+}
+
+#close-btn.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* --- DATA OVERLAY (Top Left Stats) --- */
+.data-overlay {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    padding: 8px 12px;
+    background: var(--text-main);
+    color: white;
+    border-radius: 4px;
+    font-family: "Fira Code", monospace;
+    font-size: 0.9rem;
+    z-index: 150;
+    border: 1px solid white;
+    box-shadow: 4px 4px 0px rgba(255,255,255,0.2);
+}
+
+
+/* --- SPECIFIC MODULE STYLES --- */
+
+/* 1. WEATHER MODULE */
+#card-weather.expanded { background: #f0e6d2; }
+#visual-weather {
+    background-image: url('assets/sketchbook_full.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    align-items: center;
+    justify-content: center;
+}
+#weather-mascot { width: 50%; max-width: 500px; }
+
+
+/* 2. AQI MODULE */
+#card-aqi.expanded { background: #f5f5f5; }
+#canvas-aqi {
+    background: #f5f5f5;
+    align-items: center;
+    justify-content: center;
+}
+#canvas-aqi canvas {
+    width: 60vw !important;
+    height: 60vw !important;
+    max-width: 600px !important;
+    max-height: 600px !important;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 15;
+}
+.petri-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 900px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+
+/* 3. TRAFFIC MODULE */
+#card-traffic.expanded { background: #ffffff; }
+#visual-traffic {
+    background-image: url('assets/speed_background.png');
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
+.speedometer-wrapper {
+    width: 90vw;
+    max-width: 800px;
+    aspect-ratio: 1/1;
+    position: relative;
+}
+.speedometer-base {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.speed-needle {
+    position: absolute;
+    left: 50%;
+    bottom: 65%;
+    width: auto;
+    height: 23%;
+    transform-origin: center center;
+    transform: translate(-50%, 50%) rotate(-90deg);
+    z-index: 5;
+}
+
+/* Needle Jitter Animation */
+.speed-needle.jittering {
+    animation: speedJitter 0.15s infinite;
+}
+
+@keyframes speedJitter {
+    0% { transform: translate(-50%, 50%) rotate(var(--speed-angle)); }
+    50% { transform: translate(-50%, 50%) rotate(calc(var(--speed-angle) + 2deg)); }
+    100% { transform: translate(-50%, 50%) rotate(var(--speed-angle)); }
+}
+
+
+/* 4. METRO MODULE */
+#card-metro.expanded { background: #000; }
+#visual-metro {
+    background-image: url('assets/metro_coach_inside.svg');
+    background-size: cover;
+    background-position: center;
+}
+#canvas-metro { position: absolute; inset: 0; z-index: 1; }
+
+@media (max-width: 768px) {
+    #visual-metro {
+        background-image: url('assets/metro_phone.svg'); /* Mobile-specific BG */
+    }
+}
+
+
+/* 5. NEWS SENTIMENT MODULE */
+#card-news.expanded { background: #555; }
+#visual-news {
+    background-image: url('assets/graph_bg.svg');
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
+.geiger-box {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    position: relative;
+}
+.geiger-face {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.geiger-needle {
+    position: absolute;
+    left: 50%;
+    bottom: 62%;
+    width: 0.5%;
+    min-width: 1px;
+    height: 12%;
+    background: black;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(0deg);
+    z-index: 5;
+}
+.geiger-needle.vibrating {
+    animation: geigerShake 0.1s infinite;
+}
+
+@keyframes geigerShake {
+    0% { transform: translateX(-50%) rotate(var(--curr-angle)); }
+    50% { transform: translateX(-50%) rotate(calc(var(--curr-angle) + 2deg)); }
+    100% { transform: translateX(-50%) rotate(var(--curr-angle)); }
+}
+
+
+/* 6. RADAR MODULE */
+#card-radar.expanded { background: #0a0a0a; }
+#visual-radar {
+    background-image: url('assets/graph_bg.svg');
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
+.radar-equipment {
+    width: 80vw;
+    max-width: 800px;
+    height: 80vw;
+    max-height: 800px;
+    position: relative;
+}
+.radar-base-large {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.radar-sweep-large {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-29%, -59%); /* Offset to match specific SVG center */
+    animation: radarRotate 4s linear infinite;
+    opacity: 0.6;
+    z-index: 2;
+    transform-origin: center center;
+}
+
+@keyframes radarRotate {
+    from { transform: translate(-29%, -59%) rotate(0deg); }
+    to { transform: translate(-29%, -59%) rotate(360deg); }
+}
+
+#radar-dots-layer {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-29%, -59%);
+    z-index: 10;
+}
+.blip {
+    position: absolute;
+    width: 2.5%;
+    aspect-ratio: 1/1;
+    background: #0f0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #0f0;
+    animation: blipBlink 2s infinite;
+}
+
+@keyframes blipBlink { 50% { opacity: 0.3; } }
+
+
+/* --- FOOTER & ABOUT SECTION --- */
+.last-updated-bar {
+    width: 100%;
+    text-align: center;
+    padding: 16px 16px;
+    font-size: 0.8rem;
+    color: #555;
+    border-top: 2px solid var(--border-black); /* Hard border */
+    margin-top: 40px;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .last-updated-bar { font-size: 0.7rem; padding: 10px 12px; }
+}
+
+.about-section {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.handwritten-text {
+    font-family: "Amatic SC", cursive;
+    font-size: 2.2rem; 
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.social-links-cartoon {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-links-cartoon a {
+    font-family: "Amatic SC", cursive;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #666; 
+    position: relative;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effect for social links */
+.social-links-cartoon a:hover {
+    color: var(--accent-coral); 
+    transform: scale(1.1) rotate(-2deg); /* Tilted "sticker" feel */
+}
+
+
+/* --- MOBILE SPECIFIC TWEAKS --- */
+@media (max-width: 768px) {
+    #close-btn {
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        border-width: 2px;
+        box-shadow: 3px 3px 0px var(--border-black);
+    }
+
+    .card-footer {
+        width: 90%;
+        bottom: 25px;
+        padding: 12px 15px;
+    }
+
+    .card-footer p {
+        font-size: 0.8rem;
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .handwritten-text {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .social-links-cartoon a {
+        font-size: 0.9rem;
+    }
+}
