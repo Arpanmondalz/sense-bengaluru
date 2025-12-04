@@ -1,0 +1,45 @@
+name: Update Dashboard Data
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Runs every 30 minutes
+  workflow_dispatch:        # Allows you to click a button to run it manually
+
+permissions:
+  contents: write           # Permission to write the new JSON back to the repo
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Data Update Script
+        env:
+          OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
+          TOMTOM_API_KEY: ${{ secrets.TOMTOM_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python update_data.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          # Check if data.json actually changed to avoid empty commits
+          if [[ -n $(git status -s data.json) ]]; then
+            git add data.json
+            git commit -m "Auto-update dashboard data"
+            git push
+          else
+            echo "No changes in data.json, skipping commit."
+          fi
