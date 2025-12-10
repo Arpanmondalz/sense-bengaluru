@@ -1,14 +1,14 @@
 {
-  "last_updated": "2025-12-10T04:51:02.921491+00:00",
+  "last_updated": "2025-12-10T05:15:45.553266+00:00",
   "weather": {
-    "temp": 23.7,
+    "temp": 24.3,
     "condition": "cloudy"
   },
   "aqi": 200,
   "traffic": {
-    "speed_kmh": 16
+    "speed_kmh": 15
   },
   "metro_density": "high",
   "news_sentiment": 0.5,
-  "flight_count": 1
+  "flight_count": 2
 }
