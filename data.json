@@ -1,12 +1,12 @@
 {
-  "last_updated": "2025-12-19T16:48:57.272045+00:00",
+  "last_updated": "2025-12-19T17:13:28.928557+00:00",
   "weather": {
-    "temp": 17.6,
+    "temp": 17.1,
     "condition": "sunny"
   },
   "aqi": 200,
   "traffic": {
-    "speed_kmh": 28
+    "speed_kmh": 27
   },
   "metro_density": "low",
   "news_sentiment": 0.5,
