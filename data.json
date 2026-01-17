@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-01-17T21:12:18.580800+00:00",
+  "last_updated": "2026-01-17T21:36:58.972345+00:00",
   "weather": {
-    "temp": 15.5,
+    "temp": 15.9,
     "condition": "cold"
   },
   "aqi": 200,
@@ -10,5 +10,5 @@
   },
   "metro_density": "low",
   "news_sentiment": 0.5,
-  "flight_count": 0
+  "flight_count": 1
 }
