@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-02-01T16:20:01.426290+00:00",
+  "last_updated": "2026-02-01T16:53:02.029096+00:00",
   "weather": {
-    "temp": 21.7,
-    "condition": "cloudy"
+    "temp": 20.9,
+    "condition": "sunny"
   },
   "aqi": 100,
   "traffic": {
