@@ -1,12 +1,12 @@
 {
-  "last_updated": "2026-02-08T09:24:54.728337+00:00",
+  "last_updated": "2026-02-08T09:51:50.102794+00:00",
   "weather": {
-    "temp": 29.1,
+    "temp": 29.7,
     "condition": "cloudy"
   },
   "aqi": 200,
   "traffic": {
-    "speed_kmh": 32
+    "speed_kmh": 31
   },
   "metro_density": "low",
   "news_sentiment": 0.95,
