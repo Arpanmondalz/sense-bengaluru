@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-15T19:47:06.042311+00:00",
+  "last_updated": "2026-03-15T20:20:15.528020+00:00",
   "weather": {
     "temp": 22.3,
     "condition": "sunny"
@@ -10,5 +10,5 @@
   },
   "metro_density": "low",
   "news_sentiment": 0.75,
-  "flight_count": 0
+  "flight_count": 1
 }
