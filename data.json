@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-03-22T11:17:52.939512+00:00",
+  "last_updated": "2026-03-22T11:44:09.004782+00:00",
   "weather": {
-    "temp": 30.9,
+    "temp": 30.2,
     "condition": "cloudy"
   },
   "aqi": 150,
@@ -9,6 +9,6 @@
     "speed_kmh": 32
   },
   "metro_density": "low",
-  "news_sentiment": 0.4,
-  "flight_count": 0
+  "news_sentiment": 0.25,
+  "flight_count": 1
 }
