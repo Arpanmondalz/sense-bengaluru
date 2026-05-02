@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-05-02T18:06:45.344598+00:00",
+  "last_updated": "2026-05-02T19:32:18.174903+00:00",
   "weather": {
-    "temp": 26.4,
+    "temp": 25.5,
     "condition": "cloudy"
   },
-  "aqi": 150,
+  "aqi": 100,
   "traffic": {
     "speed_kmh": 27
   },
