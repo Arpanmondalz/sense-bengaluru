@@ -1,14 +1,14 @@
 {
-  "last_updated": "2026-05-14T04:26:38.039052+00:00",
+  "last_updated": "2026-05-14T07:27:34.846699+00:00",
   "weather": {
-    "temp": 28.8,
+    "temp": 32.6,
     "condition": "cloudy"
   },
   "aqi": 150,
   "traffic": {
     "speed_kmh": 17
   },
-  "metro_density": "high",
-  "news_sentiment": 0.05,
+  "metro_density": "medium",
+  "news_sentiment": 0.85,
   "flight_count": 3
 }
