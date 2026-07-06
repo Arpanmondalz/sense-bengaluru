@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-06T20:19:57.038131+00:00",
+  "last_updated": "2026-07-06T21:52:44.464714+00:00",
   "weather": {
     "temp": 21.9,
     "condition": "cloudy"
@@ -9,6 +9,6 @@
     "speed_kmh": 32
   },
   "metro_density": "low",
-  "news_sentiment": 0.9,
+  "news_sentiment": 0.85,
   "flight_count": 6
 }
